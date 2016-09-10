@@ -2,16 +2,19 @@
   "name": "gyj-website",
   "version": "0.0.1",
   "description": "Gao Yingjian's website",
+  "main": "src/main.js",
   "author": {
     "name": "ydfzgyj",
     "email": "ydfzgyj@baliqieluo.com"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "node src/main.js",
     "debug": "webpack-dev-server --config webpack.config.js"
   },
   "dependencies": {
     "koa": "^2.0.0-alpha.7",
+    "koa-router": "^7.0.1",
+    "koa-static": "^3.0.0",
     "vue": "^2.0.0-rc.4",
     "vue-router": "^2.0.0-rc.4",
     "vuex": "^2.0.0-rc.5"
