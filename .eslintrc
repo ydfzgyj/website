@@ -1,0 +1,25 @@
+{
+	"rules": {
+		"indent": [2, "tab"],
+		"quotes": [2, "single"],
+		"linebreak-style": [2, "windows"],
+		"no-unused-vars": [0],
+		"comma-dangle": [0],
+		"no-console": [1]
+	},
+	"parserOptions": {
+		"ecmaVersion": 7,
+		"sourceType": "module"
+	},
+	"globals": {
+		"G": true,
+		"Vue": true,
+		"VueRouter": true,
+		"Vuex": true
+	},
+	"env": {
+		"browser": true,
+		"es6": true
+	},
+	"extends": "eslint:recommended"
+}
