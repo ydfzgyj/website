@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node src/main.js",
-    "debug": "webpack-dev-server --config webpack.config.js"
+    "debug": "webpack --config fe-src/webpack.config.js"
   },
   "dependencies": {
     "koa": "^2.0.0-alpha.7",
@@ -34,7 +34,6 @@
     "raw-loader": "^0.5.1",
     "style-loader": "^0.13.1",
     "uglify-js": "git://github.com/mishoo/UglifyJS2.git#harmony",
-    "webpack": "^2.1.0-beta.22",
-    "webpack-dev-server": "^2.1.0-beta.3"
+    "webpack": "^2.1.0-beta.22"
   }
 }
