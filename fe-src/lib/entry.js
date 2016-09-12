@@ -1,6 +1,3 @@
-import Vue from 'vue/dist/vue';
-import VueRouter from 'vue-router';
-
 import client from 'client';
 import routes from 'routes';
 import store from 'store';
@@ -10,7 +7,6 @@ import './public.less';
 window.G = client;
 Vue.config.devtools = true;
 
-Vue.use(VueRouter);
 const router = new VueRouter({
 	mode: 'history',
 	routes
@@ -60,5 +56,5 @@ Vue.filter('dateFormat', (date, format = 'Y-m-d h:i:s') => {
 if(!fetch) {
 	alert('请升级Chrome到最新版本！');
 } else {
-
+	//
 }

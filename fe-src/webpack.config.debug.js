@@ -1,5 +1,4 @@
-'use strict';
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 	watch: true,
@@ -7,7 +6,7 @@ module.exports = {
 		app: './fe-src/lib/entry.js'
 	},
 	output: {
-		filename: './static/main.js'
+		filename: './static/debug/main.js'
 	},
 	module: {
 		loaders: [{
@@ -25,11 +24,11 @@ module.exports = {
 		}]
 	},
 	resolve: {
-		modules: ['lib', 'page', 'directives', 'components', '../node_modules']
+		modules: ['lib', 'page', 'directives', 'components']
 	},
 	plugins: [
 		new ExtractTextPlugin({
-			filename: './static/style.css',
+			filename: './static/debug/style.css',
 			allChunks: true
 		})
 	]

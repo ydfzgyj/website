@@ -1,2 +1,3 @@
-node_modules
-webpack.config.js
+node_modules/
+debug/
+vue.bundle.js
