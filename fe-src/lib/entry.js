@@ -9,6 +9,7 @@ Vue.config.devtools = true;
 
 const router = new VueRouter({
 	mode: 'history',
+	base: window.location.pathname.startsWith('/debug') ? 'debug' : '',
 	routes
 });
 new Vue({
