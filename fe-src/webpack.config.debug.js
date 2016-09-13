@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
@@ -27,6 +28,12 @@ module.exports = {
 		modules: ['lib', 'page', 'directives', 'components']
 	},
 	plugins: [
+		new HtmlWebpackPlugin({
+			template: './fe-src/template.js',
+			filename: './static/debug/index.html',
+			vueBundle: '/debug/vue.bundle.js',
+			inject: false
+		}),
 		new ExtractTextPlugin({
 			filename: './static/debug/style.css',
 			allChunks: true

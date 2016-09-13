@@ -1,6 +1,7 @@
-var gulp = require('gulp');
-var concat = require('gulp-concat');
-var strip = require('gulp-strip-comments');
+const gulp = require('gulp');
+const concat = require('gulp-concat');
+const strip = require('gulp-strip-comments');
+const pkg = require('./package.json');
 
 gulp.task('concat-debug', function() {
 	return gulp.src([
@@ -18,7 +19,7 @@ gulp.task('concat', function() {
 		'./node_modules/vue-router/dist/vue-router.min.js',
 		'./node_modules/vuex/dist/vuex.min.js'
 	])
-		.pipe(concat('vue.bundle.js'))
+		.pipe(concat('vue.bundle-v' + pkg.version + '.js'))
 		.pipe(strip({
 			safe: true
 		}))
