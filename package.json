@@ -8,7 +8,7 @@
     "email": "ydfzgyj@baliqieluo.com"
   },
   "scripts": {
-    "start": "node src/main.js",
+    "start": "babel src/ -d dist/ && node dist/main.js",
     "fe-debug": "webpack --config fe-src/webpack.config.debug.js",
     "fe-build": "webpack --config fe-src/webpack.config.build.js && gulp concat",
     "vue-concat-debug": "gulp concat-debug"
@@ -23,6 +23,7 @@
     "vuex": "^2.0.0-rc.5"
   },
   "devDependencies": {
+    "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-async-to-generator": "^6.8.0",
