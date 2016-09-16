@@ -2,3 +2,4 @@ node_modules/
 .idea/
 static/debug/
 npm-debug.log
+mysql-config.json

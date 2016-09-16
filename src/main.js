@@ -4,15 +4,21 @@ const pkg = require('../package.json');
 // import * as os from 'os';
 const app = new (require('koa'))();
 const router = new (require('koa-router'))();
-// const mysql = require('mysql');
-// const connection = mysql.createConnection({
-// 	host: 'localhost',
-// 	user: 'gyj',
-// 	password: '(g90y09j09)',
-// 	database: 'baliqieluo'
-// });
+const connection = require('mysql').createConnection(require('../mysql-config.json').mysql);
 
 router
+	.get('/mysql', async (ctx) => {
+		connection.connect();
+		const result = await new Promise((resolve) => {
+			connection.query('SELECT `tid`,`title`,`posttime` FROM `blog_article` ORDER BY `tid` DESC LIMIT 10', (e, result) => {
+				if (e) throw e;
+				resolve(result);
+			});
+		});
+		connection.end();
+		ctx.type = '.json';
+		ctx.body = result;
+	})
 	// .get('/tasks', (ctx) => {
 	// 	ctx.type = '.json';
 	// 	ctx.body = Object.keys(tasks).map((taskName) => {
