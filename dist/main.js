@@ -6,18 +6,20 @@ const pkg = require('../package.json');
 // import * as os from 'os';
 const app = new (require('koa'))();
 const router = new (require('koa-router'))();
-const connection = require('mysql').createConnection(require('../mysql-config.json').mysql);
+const Sequelize = require('sequelize');
+const mysqlConfig = require('../mysql-config.json');
+const sequelize = new Sequelize(`mysql://${ mysqlConfig.mysql.user }:${ mysqlConfig.mysql.password }@${ mysqlConfig.mysql.host }:${ mysqlConfig.mysql.port }/${ mysqlConfig.mysql.database }`);
 
 router.get('/mysql', (() => {
 	var _ref = _asyncToGenerator(function* (ctx) {
-		connection.connect();
-		const result = yield new Promise(function (resolve) {
-			connection.query('SELECT `tid`,`title`,`posttime` FROM `blog_article` ORDER BY `tid` DESC LIMIT 10', function (e, result) {
-				if (e) throw e;
-				resolve(result);
-			});
+		const article = sequelize.define('blog_article', {}, {
+			freezeTableName: true // Model tableName will be the same as the model name
 		});
-		connection.end();
+		const result = yield article.findAll({
+			attributes: ['tid', 'title', 'posttime'],
+			order: [['tid', 'DESC']],
+			limit: 10
+		});
 		ctx.type = '.json';
 		ctx.body = result;
 	});
