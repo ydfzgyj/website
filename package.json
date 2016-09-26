@@ -8,6 +8,8 @@
     "email": "ydfzgyj@baliqieluo.com"
   },
   "scripts": {
+    "be-babel": "babel -w src/ -d dist/",
+    "be-debug": "nodemon dist/main.js",
     "start": "babel src/ -d dist/ && node dist/main.js",
     "fe-debug": "webpack --config fe-src/webpack.config.debug.js",
     "fe-build": "webpack --config fe-src/webpack.config.build.js && gulp concat",
@@ -15,6 +17,7 @@
   },
   "dependencies": {
     "graphql": "^0.7.0",
+    "graphql-relay": "^0.4.3",
     "graphql-sequelize": "^3.0.0-0",
     "koa": "^2.0.0-alpha.7",
     "koa-rewrite": "^2.1.0",

@@ -13,31 +13,60 @@ const {
 	graphql,
 	GraphQLSchema,
 	GraphQLObjectType,
-	GraphQLString
+	GraphQLString,
+	GraphQLNonNull,
+	GraphQLInt,
+	GraphQLList
 } = require('graphql');
-
-var schema = new GraphQLSchema({
-	query: new GraphQLObjectType({
-		name: 'RootQueryType',
-		fields: {
-			hello: {
-				type: GraphQLString,
-				resolve() {
-					return 'world';
-				}
-			},
-			test: {
-				type: GraphQLString,
-				resolve() {
-					return 'body';
-				}
-			}
-		}
-	})
-});
+const { resolver } = require('graphql-sequelize');
 
 router.get('/graphql', (() => {
 	var _ref = _asyncToGenerator(function* (ctx) {
+		const article = sequelize.define('blog_article', {
+			tid: { type: Sequelize.INTEGER, primaryKey: true },
+			title: Sequelize.STRING,
+			posttime: Sequelize.INTEGER
+		}, {
+			timestamps: false,
+			freezeTableName: true
+		});
+		let articleType = new GraphQLObjectType({
+			name: 'article',
+			description: 'blog article',
+			fields: {
+				tid: {
+					type: new GraphQLNonNull(GraphQLInt),
+					description: 'The tid of the article.'
+				},
+				title: {
+					type: GraphQLString,
+					description: 'The title of the article.'
+				},
+				posttime: {
+					type: GraphQLInt,
+					description: 'The posttime of the article.'
+				}
+			}
+		});
+		let schema = new GraphQLSchema({
+			query: new GraphQLObjectType({
+				name: 'RootQueryType',
+				fields: {
+					articles: {
+						type: new GraphQLList(articleType),
+						args: {
+							limit: {
+								type: GraphQLInt
+							},
+							order: {
+								type: GraphQLString
+							}
+						},
+						resolve: resolver(article)
+					}
+				}
+			})
+		});
 		const query = ctx.query.query;
 		const result = yield graphql(schema, query);
 		ctx.type = '.json';
