@@ -7,8 +7,34 @@ const router = new (require('koa-router'))();
 const Sequelize = require('sequelize');
 const mysqlConfig = require('../mysql-config.json');
 const sequelize = new Sequelize(`mysql://${mysqlConfig.mysql.user}:${mysqlConfig.mysql.password}@${mysqlConfig.mysql.host}:${mysqlConfig.mysql.port}/${mysqlConfig.mysql.database}`);
+const {
+	graphql,
+	GraphQLSchema,
+	GraphQLObjectType,
+	GraphQLString
+} = require('graphql');
+
+var schema = new GraphQLSchema({
+	query: new GraphQLObjectType({
+		name: 'RootQueryType',
+		fields: {
+			hello: {
+				type: GraphQLString,
+				resolve() {
+					return 'world';
+				}
+			}
+		}
+	})
+});
 
 router
+	.get('/graphql', async (ctx) => {
+		const query = ctx.query.query;
+		const result = await graphql(schema, query);
+		ctx.type = '.json';
+		ctx.body = result;
+	})
 	.get('/mysql', async (ctx) => {
 		const article = sequelize.define('blog_article', {}, {
 			freezeTableName: true // Model tableName will be the same as the model name

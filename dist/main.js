@@ -9,9 +9,46 @@ const router = new (require('koa-router'))();
 const Sequelize = require('sequelize');
 const mysqlConfig = require('../mysql-config.json');
 const sequelize = new Sequelize(`mysql://${ mysqlConfig.mysql.user }:${ mysqlConfig.mysql.password }@${ mysqlConfig.mysql.host }:${ mysqlConfig.mysql.port }/${ mysqlConfig.mysql.database }`);
+const {
+	graphql,
+	GraphQLSchema,
+	GraphQLObjectType,
+	GraphQLString
+} = require('graphql');
 
-router.get('/mysql', (() => {
+var schema = new GraphQLSchema({
+	query: new GraphQLObjectType({
+		name: 'RootQueryType',
+		fields: {
+			hello: {
+				type: GraphQLString,
+				resolve() {
+					return 'world';
+				}
+			},
+			test: {
+				type: GraphQLString,
+				resolve() {
+					return 'body';
+				}
+			}
+		}
+	})
+});
+
+router.get('/graphql', (() => {
 	var _ref = _asyncToGenerator(function* (ctx) {
+		const query = ctx.query.query;
+		const result = yield graphql(schema, query);
+		ctx.type = '.json';
+		ctx.body = result;
+	});
+
+	return function (_x) {
+		return _ref.apply(this, arguments);
+	};
+})()).get('/mysql', (() => {
+	var _ref2 = _asyncToGenerator(function* (ctx) {
 		const article = sequelize.define('blog_article', {}, {
 			freezeTableName: true // Model tableName will be the same as the model name
 		});
@@ -24,8 +61,8 @@ router.get('/mysql', (() => {
 		ctx.body = result;
 	});
 
-	return function (_x) {
-		return _ref.apply(this, arguments);
+	return function (_x2) {
+		return _ref2.apply(this, arguments);
 	};
 })())
 // .get('/tasks', (ctx) => {
